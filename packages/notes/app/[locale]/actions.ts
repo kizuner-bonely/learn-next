@@ -22,7 +22,7 @@ type FormState = {
 
 export async function saveNote(
   prevState: FormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<FormState> {
   const noteId = formData.get('noteId') as string
 
@@ -54,7 +54,7 @@ export async function saveNote(
 
 export async function deleteNote(
   prevState: FormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<FormState> {
   const noteId = formData.get('noteId') as string
 
@@ -96,7 +96,7 @@ export async function importNote(formData: FormData) {
 
     // 调用接口写入数据库
     const noteId = await addNote(
-      JSON.stringify({ title: filename, content: buffer.toString('utf-8') })
+      JSON.stringify({ title: filename, content: buffer.toString('utf-8') }),
     )
 
     revalidatePath('/', 'layout')

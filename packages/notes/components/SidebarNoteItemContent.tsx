@@ -63,7 +63,7 @@ export default function SidebarNoteContent(props: Props) {
         }}
         onClick={() => {
           const sidebarToggle = document.getElementById(
-            'sidebar-toggle'
+            'sidebar-toggle',
           ) as HTMLInputElement
           if (sidebarToggle) {
             sidebarToggle.checked = true
