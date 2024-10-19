@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "prepare": "husky",
-    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix \"packages/**/app/*.{js,jsx,ts,tsx}\"",
+    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix \"packages/**/app/**/*.{js,jsx,ts,tsx}\"",
     "lint:style": "stylelint --fix \"packages/**/app/**/*.{css}\""
   },
   "keywords": [],
