@@ -2,6 +2,7 @@ import localFont from 'next/font/local'
 import type { Metadata } from 'next'
 import { dir } from 'i18next'
 
+import ThemeSwitch from '@/components/ThemeSwitch'
 import LangSwitch from '@/components/LangSwitch'
 import ThemeProviders from './theme-providers'
 import './globals.css'
@@ -36,6 +37,9 @@ export default function RootLayout({ children, lng }: Props) {
       >
         <ThemeProviders>
           <header className="flex justify-end fixed w-full">
+            <div className="pr-2">
+              <ThemeSwitch />
+            </div>
             <LangSwitch />
           </header>
           {children}
