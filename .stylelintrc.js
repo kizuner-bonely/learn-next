@@ -1,10 +1,5 @@
 module.exports = {
   plugins: ['stylelint-prettier'],
-  extends: [
-    'stylelint-config-tailwindcss',
-    'stylelint-prettier/recommended',
-    'stylelint-config-recess-order',
-    'stylelint-config-prettier',
-  ],
+  extends: ['stylelint-config-tailwindcss', 'stylelint-prettier/recommended'],
   rules: { 'prettier/prettier': true },
 }

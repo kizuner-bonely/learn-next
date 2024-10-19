@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "prepare": "husky",
-    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix packages/",
-    "lint:style": "stylelint --fix \"packages/**/*.{css}\""
+    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix \"packages/**/app/*.{js,jsx,ts,tsx}\"",
+    "lint:style": "stylelint --fix \"packages/**/app/**/*.{css}\""
   },
   "keywords": [],
   "author": "",

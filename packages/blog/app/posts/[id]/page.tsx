@@ -1,31 +1,25 @@
-import { compileMDX } from 'next-mdx-remote/rsc'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 import { readFile } from 'node:fs/promises'
 import { to } from 'await-to-js'
+import fs from 'fs/promises'
 import path from 'path'
 
 type Params = { id: string }
 
-async function getMDXContent(name: string) {
-  const filePath = path.join(process.cwd(), '/posts/', `${name}.mdx`)
-  const [err, contents] = await to(readFile(filePath, 'utf-8'))
-  if (err) return null
-  return await compileMDX({
-    source: contents,
-    options: { parseFrontmatter: true },
-  })
-}
-
-type GenerateMetaDataProps = { params: Params; searchParams: string }
-export async function generateMetaData({ params }: GenerateMetaDataProps) {
-  const res = await getMDXContent(params.id)
-  if (!res) return { title: '' }
-  const { frontmatter } = res
-  return { title: frontmatter.title }
+export async function generateStaticParams() {
+  const postsDirectory = path.join(process.cwd(), 'posts')
+  const filenames = await fs.readdir(postsDirectory)
+  return filenames.map((filename) => ({ id: filename.replace(/.mdx?/, '') }))
 }
 
 export default async function Home({ params }: { params: Params }) {
-  const res = await getMDXContent(params.id)
-  if (!res) return <h1>Page not found!</h1>
-  const { content } = res
-  return content
+  const filePath = path.join(process.cwd(), '/posts/', `${params.id}.mdx`)
+  const [readingErr, contents] = await to(readFile(filePath, 'utf-8'))
+  if (readingErr) return null
+
+  return (
+    <article className="mx-auto max-w-xl py-8 prose prose-slate">
+      <MDXRemote source={contents} options={{ parseFrontmatter: true }} />
+    </article>
+  )
 }
