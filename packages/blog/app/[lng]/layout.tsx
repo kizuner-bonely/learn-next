@@ -1,5 +1,6 @@
 import localFont from 'next/font/local'
 import type { Metadata } from 'next'
+import { dir } from 'i18next'
 
 import ThemeProviders from './theme-providers'
 import './globals.css'
@@ -21,11 +22,14 @@ export const metadata: Metadata = {
   description: 'practice blog',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+type Props = Readonly<{
+  children: React.ReactNode
+  lng: string
+}>
+
+export default function RootLayout({ children, lng }: Props) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={lng} dir={dir(lng)} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

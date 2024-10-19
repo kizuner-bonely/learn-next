@@ -3,10 +3,25 @@ import Link from 'next/link'
 import dayjs from 'dayjs'
 import path from 'path'
 
+import { getTranslation } from '@i18n'
+
+type Params = { lng: string }
+
 type PostCardProps = {
   title: string
   date: string
   url: string
+}
+
+export const generateMetadata = () => {
+  return {
+    title: 'blog list',
+    description: 'This is a blog list',
+    openGraph: {
+      title: 'blog list',
+      description: 'This is a blog list',
+    },
+  }
 }
 
 async function getAllPosts(): Promise<PostCardProps[]> {
@@ -28,14 +43,14 @@ async function getAllPosts(): Promise<PostCardProps[]> {
   return posts
 }
 
-function PostCard(post: PostCardProps) {
-  const { title, date, url } = post
+function PostCard(post: PostCardProps & { lng: string }) {
+  const { title, date, url, lng } = post
 
   return (
     <div className="mb-8">
       <h2 className="mb-1 text-xl">
         <Link
-          href={url}
+          href={`/${lng}/${url}`}
           className="text-blue-700 hover:text-blue-900 dark:text-blue-400"
         >
           {title}
@@ -48,14 +63,19 @@ function PostCard(post: PostCardProps) {
   )
 }
 
-export default async function Posts() {
+export default async function Posts({ params }: { params: Params }) {
   const posts = await getAllPosts()
+  const { t } = await getTranslation(params.lng)
+
+  console.log('hh blogList', t('blogList'))
 
   return (
     <div className="mx-auto max-w-xl py-8">
-      <h1 className="mb-8 text-center text-2xl font-black">My blog list</h1>
+      <h1 className="mb-8 text-center text-2xl font-black">{t('blogList')}</h1>
       {posts.map((post, idx) => {
-        return <PostCard key={`${idx}-${post.date}`} {...post} />
+        return (
+          <PostCard key={`${idx}-${post.date}`} {...post} lng={params.lng} />
+        )
       })}
     </div>
   )
