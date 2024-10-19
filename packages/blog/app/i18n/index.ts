@@ -5,7 +5,6 @@ import { createInstance } from 'i18next'
 import siteMetadata from '@/data/siteMetadata'
 
 const { fallbackLanguage, languages } = siteMetadata
-const _log = console.log
 
 const initI18next = async (lng = fallbackLanguage, ns = 'basic') => {
   const i18nInstance = createInstance()
@@ -13,7 +12,6 @@ const initI18next = async (lng = fallbackLanguage, ns = 'basic') => {
     .use(initReactI18next)
     .use(
       resourcesToBackend((language: string, namespace: string) => {
-        _log('hh resource', language, namespace)
         return import(`./locales/${language}/${namespace}.json`)
       }),
     )
