@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "prepare": "husky",
-    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix --quiet ./packages",
-    "lint:style": "stylelint --fix \"src/**/*.{css}\""
+    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix packages/",
+    "lint:style": "stylelint --fix \"packages/**/*.{css}\""
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,11 @@
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "stylelint": "^16.10.0",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-recess-order": "^5.1.1",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-config-tailwindcss": "^0.0.7",
+    "stylelint-prettier": "^5.0.2",
     "typescript": "^5"
   },
   "lint-staged": {
