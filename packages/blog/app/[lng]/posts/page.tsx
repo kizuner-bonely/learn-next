@@ -67,8 +67,6 @@ export default async function Posts({ params }: { params: Params }) {
   const posts = await getAllPosts()
   const { t } = await getTranslation(params.lng)
 
-  console.log('hh blogList', t('blogList'))
-
   return (
     <div className="mx-auto max-w-xl py-8">
       <h1 className="mb-8 text-center text-2xl font-black">{t('blogList')}</h1>

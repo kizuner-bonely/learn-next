@@ -7,7 +7,6 @@ export default function useTheme() {
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     setTheme(darkModeMediaQuery.matches ? 'dark' : 'light')
     const listener = (event: MediaQueryListEvent) => {
-      console.log('hh', event.matches)
       setTheme(event.matches ? 'dark' : 'light')
     }
 

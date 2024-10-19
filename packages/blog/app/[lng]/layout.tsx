@@ -2,6 +2,7 @@ import localFont from 'next/font/local'
 import type { Metadata } from 'next'
 import { dir } from 'i18next'
 
+import LangSwitch from '@/components/LangSwitch'
 import ThemeProviders from './theme-providers'
 import './globals.css'
 
@@ -33,7 +34,12 @@ export default function RootLayout({ children, lng }: Props) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProviders>{children}</ThemeProviders>
+        <ThemeProviders>
+          <header className="flex justify-end fixed w-full">
+            <LangSwitch />
+          </header>
+          {children}
+        </ThemeProviders>
       </body>
     </html>
   )
