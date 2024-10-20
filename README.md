@@ -2,4 +2,5 @@
 
 1. notes
 2. blog
-3. mini-next
+3. csr
+4. ssr
