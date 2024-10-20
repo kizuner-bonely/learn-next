@@ -36,4 +36,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-**/.contentlayer
+# custom
+packages/3-csr/index.js
