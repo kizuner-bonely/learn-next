@@ -1,0 +1,23 @@
+{
+  "name": "rsc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsup --watch index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "escape-html": "^1.0.3",
+    "express": "^4.21.1",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/escape-html": "^1.0.4",
+    "@types/express": "^5.0.0",
+    "tsup": "^8.3.0"
+  }
+}
