@@ -6,7 +6,8 @@ import { renderJSXToHTML } from './utils'
 
 export async function generateHtml(url: URL) {
   // @ts-expect-error ignore
-  return renderJSXToHTML(<Router url={url} />)
+  const _html = await renderJSXToHTML(<Router url={url} />)
+  return _html.replace(/<\/body>/, '<script src="/client.js"></script></body>')
 }
 
 async function Router({ url }: { url: URL }) {
