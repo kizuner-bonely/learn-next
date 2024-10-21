@@ -1,7 +1,7 @@
 import express from 'express'
 import { readFile } from 'fs/promises'
 
-import { generateHtml, jsxGenerator } from './generator'
+import { generateHtml, generateJSX } from './generator'
 
 const app = express()
 
@@ -19,7 +19,7 @@ app.get('/:route(*)', async (req, res) => {
     res.end(content)
   } else if (url.searchParams.has('jsx')) {
     url.searchParams.delete('jsx')
-    const clientJSXString = await jsxGenerator(url)
+    const clientJSXString = await generateJSX(url)
     res.setHeader('Content-Type', 'application/json')
     res.end(clientJSXString)
   } else {

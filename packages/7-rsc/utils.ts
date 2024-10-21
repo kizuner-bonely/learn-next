@@ -111,3 +111,13 @@ export function stringifyJSX(key: string, value: unknown) {
     return value
   }
 }
+
+export function parseJSX(_key: string, value: unknown) {
+  if (value === '$RE') {
+    return Symbol.for('react.element')
+  } else if (typeof value === 'string' && value.startsWith('$')) {
+    return value.slice(1)
+  } else {
+    return value
+  }
+}

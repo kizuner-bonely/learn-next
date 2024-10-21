@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server'
 import { Layout, IndexPage, PostPage } from './components'
 import { renderJSXToClientJSX, stringifyJSX } from './utils'
 
-export async function jsxGenerator(url: URL) {
+export async function generateJSX(url: URL) {
   // @ts-expect-error ignore
   const clientJSX = await renderJSXToClientJSX(<Router url={url} />)
   const clientJSXString = JSON.stringify(clientJSX, stringifyJSX)

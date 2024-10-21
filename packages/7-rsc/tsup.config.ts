@@ -7,5 +7,5 @@ export default defineConfig({
   target: 'esnext',
   sourcemap: true,
   splitting: false,
-  onSuccess: 'node dist/index.js',
+  onSuccess: 'node ./dist/ssr.js && node ./dist/rsc.js',
 })
