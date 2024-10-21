@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-head-element */
 /* eslint-disable @next/next/no-sync-scripts */
+import { readFile } from 'fs/promises'
 import React from 'react'
 
 type RoutePageProps = {
@@ -31,22 +32,22 @@ export function IndexPage({ slugs, contents }: RoutePageProps) {
     <section>
       <h1>Blog List:</h1>
       <div>
-        {slugs.map((slug, index) => (
-          <section key={slug} className="mt-4">
-            <a className="text-blue-600" href={'/' + slug}>
-              {slug}
-            </a>
-            <article className="h-40 mt-5 flex-1 rounded-xl bg-indigo-500 text-white flex items-center justify-center">
-              {contents[index]}
-            </article>
-          </section>
+        {slugs.map((slug, idx) => (
+          // @ts-expect-error ignore
+          <Post key={idx} slug={slug} />
         ))}
       </div>
     </section>
   )
 }
 
-export function PostPage({ slug, content }: { slug: string; content: string }) {
+export function PostPage({ slug }: { slug: string; content: string }) {
+  // @ts-expect-error ignore
+  return <Post slug={slug} />
+}
+
+async function Post({ slug }: { slug: string }) {
+  const content = await readFile(`./posts/${slug}.txt`, 'utf-8')
   return (
     <section>
       <a className="text-blue-600" href={'/' + slug}>

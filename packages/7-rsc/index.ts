@@ -4,7 +4,7 @@ import { generateHtml } from './generator'
 
 const app = express()
 
-app.get('/:route(*)', async (req, res, next) => {
+app.get('/:route(*)', async (req, res) => {
   if (req.url === '/favicon.ico') {
     res.status(204).end()
     return

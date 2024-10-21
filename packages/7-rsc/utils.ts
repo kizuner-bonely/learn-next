@@ -4,13 +4,16 @@ function isObject(source: unknown): source is Record<string, any> {
   return typeof source === 'object' && source !== null
 }
 
-export function renderJSXToHTML(jsx: unknown) {
+export async function renderJSXToHTML(jsx: unknown) {
   if (typeof jsx === 'string' || typeof jsx === 'number') {
     return escapeHtml(`${jsx}`)
   } else if (jsx === null || jsx === undefined || typeof jsx === 'boolean') {
     return ''
   } else if (Array.isArray(jsx)) {
-    return jsx.map((child) => renderJSXToHTML(child)).join('')
+    const childrenHtml = await Promise.all(
+      jsx.map((child) => renderJSXToHTML(child)),
+    )
+    return childrenHtml.join('')
   } else if (isObject(jsx)) {
     if (jsx.$$typeof === Symbol.for('react.element')) {
       // normal html element
@@ -25,7 +28,7 @@ export function renderJSXToHTML(jsx: unknown) {
           }
         }
         html += '>'
-        html += renderJSXToHTML(jsx.props.children)
+        html += await renderJSXToHTML(jsx.props.children)
         html += `</${jsx.type}>`
         html = html.replace(/className/g, 'class')
         return html
@@ -34,7 +37,7 @@ export function renderJSXToHTML(jsx: unknown) {
       else if (typeof jsx.type === 'function') {
         const Component = jsx.type
         const props = jsx.props
-        const returnedJsx = Component(props)
+        const returnedJsx = await Component(props)
         return renderJSXToHTML(returnedJsx)
       }
       // fallback
