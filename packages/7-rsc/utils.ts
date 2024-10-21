@@ -13,7 +13,19 @@ export async function renderJSXToHTML(jsx: unknown) {
     const childrenHtml = await Promise.all(
       jsx.map((child) => renderJSXToHTML(child)),
     )
-    return childrenHtml.join('')
+    let html = ''
+    let wasTextNode = false
+    let isTextNode = false
+    for (let i = 0; i < jsx.length; i++) {
+      isTextNode = typeof jsx[i] === 'string' || typeof jsx[i] === 'number'
+      if (wasTextNode && isTextNode) {
+        html += '<!-- -->'
+      }
+      html += childrenHtml[i]
+      wasTextNode = isTextNode
+    }
+    return html
+    // return childrenHtml.join('')
   } else if (isObject(jsx)) {
     if (jsx.$$typeof === Symbol.for('react.element')) {
       // normal html element

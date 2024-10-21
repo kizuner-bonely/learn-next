@@ -13,8 +13,30 @@ export async function jsxGenerator(url: URL) {
 
 export async function generateHtml(url: URL) {
   // @ts-expect-error ignore
-  const _html = await renderJSXToHTML(<Router url={url} />)
-  return _html.replace(/<\/body>/, '<script src="/client.js"></script></body>')
+  const jsx = <Router url={url} />
+  let html = await renderJSXToHTML(jsx)
+  const clientJSX = await renderJSXToClientJSX(jsx)
+  const clientJSXString = JSON.stringify(clientJSX, stringifyJSX)
+
+  // add importmap and client.js script
+  html = html.replace('</body>', '')
+  html += '<script>window.__INITIAL_CLIENT_JSX_STRING__ ='
+  html += JSON.stringify(clientJSXString).replace(/</g, '\\u003c')
+  html += '</script>'
+  html += `
+<script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?dev"
+    }
+  }
+</script>
+`
+  html += '<script type="module" src="/client.js"></script>'
+  html += '</body>'
+
+  return html
 }
 
 async function Router({ url }: { url: URL }) {
