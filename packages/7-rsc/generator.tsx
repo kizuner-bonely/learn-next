@@ -1,8 +1,9 @@
 import React from 'react'
 import { readFile, readdir } from 'fs/promises'
+import { renderToString } from 'react-dom/server'
 
 import { Layout, IndexPage, PostPage } from './components'
-import { renderJSXToHTML, renderJSXToClientJSX, stringifyJSX } from './utils'
+import { renderJSXToClientJSX, stringifyJSX } from './utils'
 
 export async function jsxGenerator(url: URL) {
   // @ts-expect-error ignore
@@ -13,10 +14,9 @@ export async function jsxGenerator(url: URL) {
 
 export async function generateHtml(url: URL) {
   // @ts-expect-error ignore
-  const jsx = <Router url={url} />
-  let html = await renderJSXToHTML(jsx)
-  const clientJSX = await renderJSXToClientJSX(jsx)
+  const clientJSX = await renderJSXToClientJSX(<Router url={url} />)
   const clientJSXString = JSON.stringify(clientJSX, stringifyJSX)
+  let html = renderToString(clientJSX)
 
   // add importmap and client.js script
   html = html.replace('</body>', '')
