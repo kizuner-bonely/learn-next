@@ -51,3 +51,51 @@ export async function renderJSXToHTML(jsx: unknown) {
     throw new Error('Type not implemented.')
   }
 }
+
+export async function renderJSXToClientJSX(jsx: unknown) {
+  if (
+    typeof jsx === 'string' ||
+    typeof jsx === 'number' ||
+    typeof jsx === 'boolean' ||
+    jsx === null ||
+    jsx === undefined
+  ) {
+    return jsx
+  } else if (Array.isArray(jsx)) {
+    return Promise.all(jsx.map((child) => renderJSXToClientJSX(child)))
+  } else if (isObject(jsx)) {
+    if (jsx.$$typeof === Symbol.for('react.element')) {
+      if (typeof jsx.type === 'string') {
+        return { ...jsx, props: await renderJSXToClientJSX(jsx.props) }
+      } else if (typeof jsx.type === 'function') {
+        const Component = jsx.type
+        const props = jsx.props
+        const returnedJsx = await Component(props)
+        return renderJSXToClientJSX(returnedJsx)
+      } else {
+        throw new Error('Type not implemented.')
+      }
+    } else {
+      return Object.fromEntries(
+        await Promise.all(
+          Object.entries(jsx).map(async ([propName, value]) => [
+            propName,
+            await renderJSXToClientJSX(value),
+          ]),
+        ),
+      )
+    }
+  } else {
+    throw new Error('Type not implemented.')
+  }
+}
+
+export function stringifyJSX(key: string, value: unknown) {
+  if (value === Symbol.for('react.element')) {
+    return '$RE'
+  } else if (typeof value === 'string' && value.startsWith('$')) {
+    return `$${value}`
+  } else {
+    return value
+  }
+}

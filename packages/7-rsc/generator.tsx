@@ -1,8 +1,15 @@
-import { readFile, readdir } from 'fs/promises'
 import React from 'react'
+import { readFile, readdir } from 'fs/promises'
 
 import { Layout, IndexPage, PostPage } from './components'
-import { renderJSXToHTML } from './utils'
+import { renderJSXToHTML, renderJSXToClientJSX, stringifyJSX } from './utils'
+
+export async function jsxGenerator(url: URL) {
+  // @ts-expect-error ignore
+  const clientJSX = await renderJSXToClientJSX(<Router url={url} />)
+  const clientJSXString = JSON.stringify(clientJSX, stringifyJSX)
+  return clientJSXString
+}
 
 export async function generateHtml(url: URL) {
   // @ts-expect-error ignore
