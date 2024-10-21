@@ -2,13 +2,13 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import React from 'react'
 
-export function BlogPostPage({
-  postContent,
-  author,
-}: {
-  postContent: string
-  author: string
-}) {
+type RoutePageProps = {
+  slugs: string[]
+  contents: string[]
+}
+
+export function Layout({ children }: { children: JSX.Element }) {
+  const author = 'hh'
   return (
     <html>
       <head>
@@ -19,12 +19,43 @@ export function BlogPostPage({
         <nav className="flex items-center justify-center gap-10 text-blue-600">
           <a href="/">Home</a>
         </nav>
-        <article className="h-40 mt-5 flex-1 rounded-xl bg-indigo-500 text-white flex items-center justify-center">
-          {postContent}
-        </article>
+        <main>{children}</main>
         <Footer author={author} />
       </body>
     </html>
+  )
+}
+
+export function IndexPage({ slugs, contents }: RoutePageProps) {
+  return (
+    <section>
+      <h1>Blog List:</h1>
+      <div>
+        {slugs.map((slug, index) => (
+          <section key={slug} className="mt-4">
+            <a className="text-blue-600" href={'/' + slug}>
+              {slug}
+            </a>
+            <article className="h-40 mt-5 flex-1 rounded-xl bg-indigo-500 text-white flex items-center justify-center">
+              {contents[index]}
+            </article>
+          </section>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export function PostPage({ slug, content }: { slug: string; content: string }) {
+  return (
+    <section>
+      <a className="text-blue-600" href={'/' + slug}>
+        {slug}
+      </a>
+      <article className="h-40 mt-5 flex-1 rounded-xl bg-indigo-500 text-white flex items-center justify-center">
+        {content}
+      </article>
+    </section>
   )
 }
 

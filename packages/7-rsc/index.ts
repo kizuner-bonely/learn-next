@@ -4,8 +4,13 @@ import { generateHtml } from './generator'
 
 const app = express()
 
-app.get('/:route(*)', async (req, res) => {
-  const html = await generateHtml()
+app.get('/:route(*)', async (req, res, next) => {
+  if (req.url === '/favicon.ico') {
+    res.status(204).end()
+    return
+  }
+  const url = new URL(req.url, `http://${req.headers.host}`)
+  const html = await generateHtml(url)
   res.setHeader('Content-Type', 'text/html')
   res.end(html)
 })
