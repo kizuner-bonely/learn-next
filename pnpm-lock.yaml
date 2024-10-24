@@ -136,6 +136,55 @@ importers:
         specifier: ^5
         version: 5.6.3
 
+  packages/10-clientComponents:
+    dependencies:
+      body-parser:
+        specifier: ^1.20.3
+        version: 1.20.3
+      concurrently:
+        specifier: ^9.0.1
+        version: 9.0.1
+      escape-html:
+        specifier: ^1.0.3
+        version: 1.0.3
+      express:
+        specifier: ^4.21.1
+        version: 4.21.1
+      node-fetch:
+        specifier: ^3.3.2
+        version: 3.3.2
+      react:
+        specifier: 18.3.0-canary-c3048aab4-20240326
+        version: 18.3.0-canary-c3048aab4-20240326
+      react-dom:
+        specifier: 18.3.0-canary-c3048aab4-20240326
+        version: 18.3.0-canary-c3048aab4-20240326(react@18.3.0-canary-c3048aab4-20240326)
+      react-server-dom-webpack:
+        specifier: 18.3.0-canary-c3048aab4-20240326
+        version: 18.3.0-canary-c3048aab4-20240326(react-dom@18.3.0-canary-c3048aab4-20240326(react@18.3.0-canary-c3048aab4-20240326))(react@18.3.0-canary-c3048aab4-20240326)(webpack@5.95.0)
+    devDependencies:
+      '@types/body-parser':
+        specifier: ^1.19.5
+        version: 1.19.5
+      '@types/escape-html':
+        specifier: ^1.0.4
+        version: 1.0.4
+      '@types/express':
+        specifier: ^5.0.0
+        version: 5.0.0
+      '@types/node':
+        specifier: ^20
+        version: 20.16.12
+      '@types/react':
+        specifier: ^18
+        version: 18.3.11
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.3.1
+      tsx:
+        specifier: ^4.19.1
+        version: 4.19.1
+
   packages/2-blog:
     dependencies:
       '@headlessui/react':
